@@ -1,0 +1,10 @@
+<?php
+
+namespace Allyson\ArtisanDomainContext\Tests\Unit\Tools\Classes;
+
+use Allyson\ArtisanDomainContext\Tests\Unit\Tools\Classes\FooInterface;
+use Allyson\ArtisanDomainContext\Tests\Unit\Tools\Classes\SharedInterface;
+
+class FooClassC extends FooClassB implements FooInterface, SharedInterface
+{
+}

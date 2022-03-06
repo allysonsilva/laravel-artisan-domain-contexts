@@ -1,0 +1,6 @@
+---
+engines:
+  phpcs:
+  phpmd:
+exclude_paths:
+  - "**/tests/**"

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         processIsolation="false"
+         stopOnError="true"
+         stopOnFailure="true">
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <report>
+            <clover outputFile="./tests/reports/clover.xml"/>
+            <text outputFile="php://stdout"/>
+            <html outputDirectory="./tests/reports/html-coverage" lowUpperBound="35" highLowerBound="98"/>
+            <xml outputDirectory="./tests/reports/xml-coverage"/>
+        </report>
+    </coverage>
+    <logging>
+        <testdoxText outputFile="php://stdout"/>
+    </logging>
+    <testsuites>
+        <testsuite name="Laravel Artisan Domain Contexts Unit Tests">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <server name="APP_KEY" value="base64:Dnj5j0QECXE/NrdgRvUkIfFGNdxQL1IlOMxSFVk/iPs="/>
+        <server name="APP_ENV" value="testing"/>
+        <server name="DB_CONNECTION" value="mysql"/>
+        <server name="DB_HOST" value="127.0.0.1"/>
+        <server name="DB_PORT" value="3306"/>
+        <server name="DB_DATABASE" value="tests"/>
+        <server name="DB_USERNAME" value="root"/>
+        <server name="DB_PASSWORD" value="root"/>
+        <!-- <server name="DB_CONNECTION" value="sqlite"/> -->
+        <!-- <server name="DB_DATABASE" value=":memory:"/> -->
+    </php>
+</phpunit>

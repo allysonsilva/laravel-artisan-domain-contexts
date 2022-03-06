@@ -1,0 +1,7 @@
+<?php
+
+namespace Allyson\ArtisanDomainContext\Tests\Unit\Tools\Classes;
+
+interface BarInterface
+{
+}

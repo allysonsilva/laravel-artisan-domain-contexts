@@ -1,0 +1,76 @@
+name: Continuous Integration - L8
+
+on:
+    push:
+        paths:
+            - '**.php'
+    pull_request:
+        paths:
+            - '**.php'
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php: ['8.0', '8.1']
+                laravel: ['^8.0']
+                testbench: ['^6.0']
+                stability: [prefer-stable]
+
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_DATABASE: tests
+                    MYSQL_HOST: 127.0.0.1
+                    MYSQL_USER: app
+                    MYSQL_PASSWORD: app
+                    MYSQL_ROOT_PASSWORD: root
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=3
+
+        name: "CI - PHP: ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - Testbench ${{ matrix.testbench }} - ${{ matrix.stability }}"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, mysqli, pdo_mysql, soap, intl, gd, exif, iconv, fileinfo
+                  ini-values: error_reporting=E_ALL
+                  tools: composer:v2
+                  coverage: pcov
+
+            - name: Install PHP Dependencies
+              run: |
+                  composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+                  composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest --ansi
+
+            - name: PHPUnit Testing
+              run: composer test:unit
+
+            - name: Upload Code Coverage to Codecov
+              uses: codecov/codecov-action@v2
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  file: ./tests/reports/clover.xml
+                  flags: tests
+                  name: codecov-umbrella
+                  verbose: true
+                  fail_ci_if_error: true
+
+            - name: Upload Code Coverage to Codacy
+              uses: codacy/codacy-coverage-reporter-action@v1
+              with:
+                  project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+                  coverage-reports: ./tests/reports/clover.xml

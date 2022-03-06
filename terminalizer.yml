@@ -1,0 +1,124 @@
+# @see https://github.com/faressoft/terminalizer
+
+# $> terminalizer record demo --config terminalizer.yml
+# $> terminalizer render demo.yml
+
+command: /usr/local/bin/zsh --login
+
+# Specify the current working directory path
+# the default is the current working directory path
+cwd: null
+
+# Export additional ENV variables
+env:
+  recording: true
+  TERMINALIZER: true
+
+# Explicitly set the number of columns
+# or use `auto` to take the current
+# number of columns of your shell
+# cols: 79
+cols: auto
+
+# Explicitly set the number of rows
+# or use `auto` to take the current
+# number of rows of your shell
+# rows: 14
+rows: auto
+
+# Amount of times to repeat GIF
+# If value is -1, play once
+# If value is 0, loop indefinitely
+# If value is a positive number, loop n times
+repeat: 0
+
+# Quality
+# 1 - 100
+quality: 100
+
+# Delay between frames in ms
+# If the value is `auto` use the actual recording delays
+frameDelay: auto
+
+# Maximum delay between frames in ms
+# Ignored if the `frameDelay` isn't set to `auto`
+# Set to `auto` to prevent limiting the max idle time
+maxIdleTime: 2000
+
+# The surrounding frame box
+# The `type` can be null, window, floating, or solid`
+# To hide the title use the value null
+# Don't forget to add a backgroundColor style with a null as type
+frameBox:
+  type: floating
+  title: Laravel App
+  style:
+    backgroundColor: "#252525"
+    border: "5px #ff5f77 solid"
+    # boxShadow: none
+    # margin: 0px
+
+# Add a watermark image to the rendered gif
+# You need to specify an absolute path for
+# the image on your machine or a URL, and you can also
+# add your own CSS styles
+watermark:
+  imagePath: null
+
+# Cursor style can be one of
+# `block`, `underline`, or `bar`
+cursorStyle: block
+
+# Font family
+# You can use any font that is installed on your machine
+# in CSS-like syntax
+fontFamily: '"FuraMono Nerd Font", "DejaVu Sans Mono", Monaco, "Lucida Console", monospace'
+
+# The size of the font
+fontSize: 20
+
+# The height of lines
+lineHeight: 1.1
+
+# The spacing between letters
+letterSpacing: 0
+
+# Theme
+theme:
+  background: "#252525"
+  foreground: "#eaeaea"
+  cursor: "#ff443e"
+  # One Dark Theme
+  black: "#272c33"
+  red: "#e26a72"
+  green: "#96c475"
+  yellow: "#d29a61"
+  blue: "#5cadf1"
+  magenta: "#c774df"
+  cyan: "#51b5c3"
+  white: "#abb1bf"
+  brightBlack: "#272c33"
+  brightRed: "#e26a72"
+  brightGreen: "#96c475"
+  brightYellow: "#d29a61"
+  brightBlue: "#5cadf1"
+  brightMagenta: "#c774df"
+  brightCyan: "#51b5c3"
+  brightWhite: "#abb1bf"
+  # # My Colors
+  # black: "#2C2C2C",
+  # red: "#FF443E",
+  # green: "#04D82C",
+  # yellow: "#FFC135",
+  # blue: "#42A5F5",
+  # magenta: "#D81B60",
+  # cyan: "#00ACC1",
+  # white: "#F5F5F5",
+  # lightBlack: "#5D6F71",
+  # lightRed: "#FF443E",
+  # lightGreen: "#04F968",
+  # lightYellow: "#FFF035",
+  # lightBlue: "#42C7F5",
+  # lightMagenta: "#D81B60",
+  # lightCyan: "#00ACC1",
+  # lightWhite: "#F5F5F5"
