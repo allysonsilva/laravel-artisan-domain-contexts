@@ -191,3 +191,6 @@ parameters:
         -
             message: '#^Function \"spl_autoload_register\(\)\" cannot be used\/left in the code#'
             path: src/Tools/ClassIterator.php
+        -
+            message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection<\(int\|string\),mixed>::map\(\) expects callable\(mixed, \(int\|string\)\): class-string<object>, Closure\(ReflectionClass, int\): class-string<object> given.#'
+            path: src/Commands/Concerns/InteractsWithChoices.php
