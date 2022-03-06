@@ -12,8 +12,8 @@
          failOnRisky="true"
          failOnWarning="true"
          processIsolation="false"
-         stopOnError="true"
-         stopOnFailure="true">
+         stopOnError="false"
+         stopOnFailure="false">
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>

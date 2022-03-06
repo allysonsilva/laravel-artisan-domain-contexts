@@ -87,8 +87,8 @@ class ClassIteratorTest extends TestCase
         self::assertCount(3, $fooClasses);
 
         self::assertTrue($fooClasses[0]->getName() === FooClassA::class);
-        self::assertTrue($fooClasses[1]->getName() === FooClassC::class);
-        self::assertTrue($fooClasses[2]->getName() === FooClassB::class);
+        self::assertTrue($fooClasses[1]->getName() === FooClassB::class);
+        self::assertTrue($fooClasses[2]->getName() === FooClassC::class);
     }
 
     public function testInNamespaceFilter(): void
@@ -165,7 +165,8 @@ class ClassIteratorTest extends TestCase
         $finder = Finder::create()
                         ->in($path ?? static::$path)
                         ->name("/\.php\$/i")
-                        ->files();
+                        ->files()
+                        ->sortByName();
 
         $classes = new ClassIterator($finder);
 
