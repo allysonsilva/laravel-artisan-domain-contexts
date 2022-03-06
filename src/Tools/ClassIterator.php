@@ -33,6 +33,7 @@ class ClassIterator implements IteratorAggregate
     public function __construct(private Finder $finder)
     {
         $this->customAutoloader();
+
         $this->handleFiles($this->finder);
     }
 
