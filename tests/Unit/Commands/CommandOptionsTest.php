@@ -37,12 +37,12 @@ class CommandOptionsTest extends TestCase
         /** @var \Symfony\Component\Console\Input\InputDefinition */
         $definition = $command->getDefinition();
 
-        self::assertTrue($definition->hasOption('multi-databases'));
         self::assertTrue($definition->hasOption('only-default'));
         self::assertTrue($definition->hasOption('force'));
 
-        self::assertFalse($definition->hasOption('context-namespace'));
         self::assertFalse($definition->hasOption('all-contexts'));
+        self::assertFalse($definition->hasOption('context-namespace'));
+        self::assertFalse($definition->hasOption('multi-databases'));
     }
 
     /**
@@ -57,12 +57,12 @@ class CommandOptionsTest extends TestCase
         /** @var \Symfony\Component\Console\Input\InputDefinition */
         $definition = $command->getDefinition();
 
+        self::assertTrue($definition->hasOption('multi-databases'));
         self::assertTrue($definition->hasOption('only-default'));
         self::assertTrue($definition->hasOption('force'));
 
         self::assertFalse($definition->hasOption('all-contexts'));
         self::assertFalse($definition->hasOption('context-namespace'));
-        self::assertFalse($definition->hasOption('multi-databases'));
     }
 
     /**
@@ -161,8 +161,8 @@ class CommandOptionsTest extends TestCase
         self::assertTrue($definition->hasOption('only-default'));
         self::assertTrue($definition->hasOption('force'));
 
-        self::assertFalse($definition->hasOption('multi-databases'));
         self::assertFalse($definition->hasOption('context-namespace'));
+        self::assertFalse($definition->hasOption('multi-databases'));
     }
 
     /**
@@ -190,7 +190,7 @@ class CommandOptionsTest extends TestCase
      *
      * @return iterable
      */
-    private function abstractsMakeCommandsProvider(): iterable
+    public function abstractsMakeCommandsProvider(): iterable
     {
         $abstracts = [
             'command.cast.make',
