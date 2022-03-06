@@ -740,7 +740,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-laravel]: https://img.shields.io/static/v1?label=laravel&message=%E2%89%A58.0&color=ff2d20&logo=laravel
 [ico-actions]: https://github.com/allysonsilva/laravel-artisan-domain-contexts/actions/workflows/ci.yml/badge.svg
 [ico-codecov]: https://codecov.io/gh/allysonsilva/laravel-artisan-domain-contexts/branch/main/graph/badge.svg?token=MXQO0HIBFM
-[ico-code-quality]: https://app.codacy.com/project/badge/Grade/78f38785ec494eea880ab0335a40b243
+[ico-code-quality]: https://app.codacy.com/project/badge/Grade/5f2b3a98dbee48aa8e14ba4a55681f09
 [ico-version]: https://img.shields.io/packagist/v/allysonsilva/laravel-artisan-domain-contexts.svg?label=stable
 [ico-downloads]: https://img.shields.io/packagist/dt/allysonsilva/laravel-artisan-domain-contexts.svg
 
