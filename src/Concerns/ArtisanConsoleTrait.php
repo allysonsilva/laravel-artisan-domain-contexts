@@ -16,7 +16,10 @@ trait ArtisanConsoleTrait
         if (is_null($this->artisan)) {
             $consoleApplication = (new ArtisanApplication($this->app, $this->events, $this->app->version()));
 
-            return $this->artisan = $consoleApplication->resolveCommands($this->commands);
+            $this->artisan = $consoleApplication->resolveCommands($this->commands)
+                                                ->setContainerCommandLoader();
+
+            return $this->artisan;
         }
 
         return $this->artisan;

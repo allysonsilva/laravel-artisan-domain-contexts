@@ -737,7 +737,7 @@ If you discover any security related issues, please email github@allyson.dev ins
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
 [ico-php]: https://img.shields.io/packagist/php-v/allysonsilva/laravel-artisan-domain-contexts?color=%234F5B93&logo=php
-[ico-laravel]: https://img.shields.io/static/v1?label=laravel&message=%E2%89%A58.0&color=ff2d20&logo=laravel
+[ico-laravel]: https://img.shields.io/static/v1?label=laravel&message=%E2%89%A59.0&color=ff2d20&logo=laravel
 [ico-actions]: https://github.com/allysonsilva/laravel-artisan-domain-contexts/actions/workflows/ci.yml/badge.svg
 [ico-codecov]: https://codecov.io/gh/allysonsilva/laravel-artisan-domain-contexts/branch/main/graph/badge.svg?token=MXQO0HIBFM
 [ico-code-quality]: https://app.codacy.com/project/badge/Grade/5f2b3a98dbee48aa8e14ba4a55681f09

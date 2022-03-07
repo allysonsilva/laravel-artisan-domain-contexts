@@ -162,6 +162,7 @@ parameters:
         - src
         - config
     reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
     typeAliases:
         InputOptionType: Symfony\Component\Console\Input\InputOption
         InputOptionsTypeArray: 'array<int, InputOptionType>'

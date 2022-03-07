@@ -1,4 +1,4 @@
-name: Continuous Integration - L8
+name: Continuous Integration
 
 on:
     push:
@@ -7,17 +7,20 @@ on:
     pull_request:
         paths:
             - '**.php'
+    schedule:
+        - cron: '0 0 * * *'
 
 jobs:
     tests:
+        if: "!contains(github.event.head_commit.message, 'skip ci')"
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
                 php: ['8.0', '8.1']
-                laravel: ['^8.0']
-                testbench: ['^6.0']
-                stability: [prefer-stable]
+                laravel: ['^9.0']
+                testbench: ['^7.0']
+                stability: [prefer-lowest, prefer-stable]
 
         services:
             mysql:
@@ -39,8 +42,22 @@ jobs:
         name: "CI - PHP: ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - Testbench ${{ matrix.testbench }} - ${{ matrix.stability }}"
 
         steps:
+            - name: Update apt
+              run: sudo apt-get update --fix-missing
+
             - name: Checkout code
               uses: actions/checkout@v2
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/files
+                  key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+            # -   name: Install SQLite 3
+            #     run: |
+            #         sudo apt-get update
+            #         sudo apt-get install sqlite3
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -50,6 +67,11 @@ jobs:
                   ini-values: error_reporting=E_ALL
                   tools: composer:v2
                   coverage: pcov
+
+            - name: Setup Problem Matches
+              run: |
+                  echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+                  echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
             - name: Install PHP Dependencies
               run: |
