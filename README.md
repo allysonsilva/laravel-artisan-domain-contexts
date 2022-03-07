@@ -25,7 +25,7 @@
     - [Install the Package](#install-the-package)
     - [Publish the Config](#publish-the-config)
   - [🔧 Configuration](#--configuration)
-  - [🙌 Usage](#--usage)
+  - [📖 Usage](#--usage)
     - [Understanding the `--context` option](#understanding-the---context-option)
       - [Example](#example)
     - [Understanding the `--context-namespace` option](#understanding-the---context-namespace-option)
@@ -44,11 +44,11 @@
       - [📹  Demo `migrate:rollback`](#--demo-migraterollback)
     - [`db:seed` command](#dbseed-command)
       - [📹  Demo `db:seed`](#--demo-dbseed)
-  - [🐛 Testing](#--testing)
+  - [🧪 Testing](#--testing)
   - [📝 Changelog](#--changelog)
   - [🤝 Contributing](#--contributing)
   - [🔒 Security](#--security)
-  - [🎉 Credits](#--credits)
+  - [🏆 Credits](#--credits)
   - [License](#license)
 
 ## Overview
@@ -108,7 +108,7 @@ php artisan vendor:publish --tag="context-config"
 
 3. Inside the domain folder (`config('context.folders.domain')`), is where you can find Laravel components (such as migrations, seeders, models, jobs, etc). The names of the folders, where the classes are, are in the config of `config('context.folders.components')`.
 
-## 🙌  Usage
+## 📖  Usage
 
 To use **commands by context**, the following options have been added to Laravel commands:
 
@@ -709,7 +709,7 @@ See the demo below for better understanding:
     <img src="/images/demos/db-seed.gif?raw=true"/>
 </p>
 
-## 🐛  Testing
+## 🧪  Testing
 
 ``` bash
 composer test:unit
@@ -727,7 +727,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 If you discover any security related issues, please email github@allyson.dev instead of using the issue tracker.
 
-## 🎉  Credits
+## 🏆  Credits
 
 - [Allyson Silva](https://github.com/allysonsilva)
 - [All Contributors](../../contributors)
