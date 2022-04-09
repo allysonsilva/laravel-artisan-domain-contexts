@@ -86,4 +86,14 @@ class SeederMakeCommand extends LaravelSeederMakeCommand
     {
         return GeneratorCommand::qualifyClass($name);
     }
+
+    /**
+     * Get the root namespace for the class.
+     *
+     * @return string
+     */
+    protected function rootNamespace()
+    {
+        return $this->laravel->getNamespace();
+    }
 }
