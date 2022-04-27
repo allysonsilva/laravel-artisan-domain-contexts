@@ -19,6 +19,12 @@
 ## Table of Contents
 
   - [Overview](#overview)
+    - [Concepts](#concepts)
+      - [What is "Domain"?](#what-is-domain)
+      - [What is "Contexts"?](#what-is-contexts)
+    - [Questions](#questions)
+      - [Should I use this package in the default Laravel framework?](#should-i-use-this-package-in-the-default-laravel-framework)
+      - [When should I use this package?](#when-should-i-use-this-package)
   - [🚀 Installation](#--installation)
     - [Requirements](#requirements)
     - [Laravel version Compatibility](#laravel-version-compatibility)
@@ -58,6 +64,32 @@
 <p align="center">
     <img src="/images/demos/overview.gif?raw=true"/>
 </p>
+
+### Concepts
+
+#### What is "Domain"?
+
+- The term "**Domain**" has nothing to do with URL or host (www.example.com), but with the *business*, **the specific sphere of activity or knowledge**. In other words, the "**Domain**" is the company's *business* itself.
+- "**Domain**" is the first (main 😏) word of DDD (*Domain-Driven Design*), which is the company's business.
+
+See the [article](https://stitcher.io/blog/organise-by-domain) for a better understanding!
+
+#### What is "Contexts"?
+
+- If the "**Domain**" is the business of the company, the "**Context**" are the parts of that business, that is, **the groups of related things, different parts of the business logic**. For example, in an online store business, we could have the contexts of: Orders, Customers, Products and more. The "**Domain**" is the business of the online store, and the contexts are the parts of that same business.
+
+See the [article](https://martinfowler.com/bliki/BoundedContext.html) for better understanding!
+
+### Questions
+
+#### Should I use this package in the default Laravel framework?
+
+No, because the files handled by `artisan` are already in their default folders.
+
+#### When should I use this package?
+
+- When the folder structure is not Laravel's default.
+- When needed, for example, execute/manipulate `artisan` commands in different contexts/folders of the application.
 
 ## 🚀  Installation
 
