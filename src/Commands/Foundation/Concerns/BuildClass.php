@@ -17,17 +17,24 @@ trait BuildClass
      * Get the context namespace for the class.
      * Get the full namespace for a given class, without the class name.
      *
+     * @param string $componentFolder
+     *
      * @return string
      */
-    protected function getContextNamespace(): string
+    protected function getContextNamespace(string $componentFolder = ''): string
     {
         $rootNamespace = trim($this->rootNamespace(), '\\');
 
         if (! empty($contextOption = $this->contextOption())) {
-            return $rootNamespace . '\\' .
-                    config('context.folders.domain') . '\\' .
-                    $contextOption . '\\' .
-                    $this->getComponentFolderNamespace();
+            $context = $rootNamespace . '\\' .
+                       config('context.folders.domain') . '\\' .
+                       $contextOption . '\\';
+
+            if (! empty($componentFolder)) {
+                return $context . $componentFolder;
+            }
+
+            return $context . $this->getComponentFolderNamespace();
         }
 
         return parent::getDefaultNamespace($rootNamespace);
