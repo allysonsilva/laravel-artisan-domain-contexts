@@ -2,7 +2,13 @@
 
 All notable changes to `laravel-artisan-domain-contexts` will be documented in this file.
 
-## [Unreleased](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.0.1...2.x)
+## [Unreleased](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.1.0...2.x)
+
+## [v2.1.0 (2022-05-05)](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.0.1...v2.1.0)
+
+### Changed
+
+- Handled model option (`--model`) by context in **Policies** on [#5 (issue)](https://github.com/allysonsilva/laravel-artisan-domain-contexts/issues/5) with [#6 (pull request)](https://github.com/allysonsilva/laravel-artisan-domain-contexts/pull/6)
 
 ## [v2.0.1 (2022-04-09)](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.0.0...v2.0.1)
 
