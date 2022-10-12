@@ -22,27 +22,21 @@ class RefreshCommandTest extends MigrateCommandTestCase
         $this->artisan('migrate', ['--only-default' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--only-default' => true])
-             ->expectsOutput('Rolling back: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2019_12_14_000001_create_personal_access_tokens_table(.*)#'))
-             ->expectsOutput('Rolling back: 2019_08_19_000000_create_failed_jobs_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2019_08_19_000000_create_failed_jobs_table(.*)#'))
-             ->expectsOutput('Rolling back: 2014_10_12_100000_create_password_resets_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2014_10_12_100000_create_password_resets_table(.*)#'))
-             ->expectsOutput('Rolling back: 2014_10_12_000000_create_users_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2014_10_12_000000_create_users_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Rolling back migrations/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table/'))
             //
-             ->expectsOutput('Migrating: 2014_10_12_000000_create_users_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2014_10_12_000000_create_users_table(.*)#'))
-             ->expectsOutput('Migrating: 2014_10_12_100000_create_password_resets_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2014_10_12_100000_create_password_resets_table(.*)#'))
-             ->expectsOutput('Migrating: 2019_08_19_000000_create_failed_jobs_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2019_08_19_000000_create_failed_jobs_table(.*)#'))
-             ->expectsOutput('Migrating: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2019_12_14_000001_create_personal_access_tokens_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table/'))
             //
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_users_1_table')
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_posts_1_table')
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_xyz_1_table')
+             ->doesntExpectOutputToContain('2022_01_30_000000_create_users_1_table')
+             ->doesntExpectOutputToContain('2022_01_30_000000_create_posts_1_table')
+             ->doesntExpectOutputToContain('2022_01_30_000000_create_xyz_1_table')
              ->assertSuccessful();
     }
 
@@ -52,26 +46,20 @@ class RefreshCommandTest extends MigrateCommandTestCase
      */
     public function refreshContextMigrations(): void
     {
-        $this->artisan('migrate', ['--all-contexts' => true])->assertSuccessful();
+        $this->artisan('migrate', ['--all-contexts' => true])->assertSuccessful()->run();
 
         $this->artisan($this->commandName, ['--context' => 'Post'])
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_posts_3_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_posts_3_table(.*)#'))
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_posts_2_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_posts_2_table(.*)#'))
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_posts_1_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_posts_1_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Rolling back migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table/'))
              //
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_2_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_3_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_3_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table/'))
             //
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_users_1_table')
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_xyz_1_table')
-             ->doesntExpectOutput('Migrating: 2019_12_14_000001_create_personal_access_tokens_table')
+             ->doesntExpectOutputToContain('2019_12_14_000001_create_personal_access_tokens_table')
              ->assertSuccessful();
     }
 
@@ -84,31 +72,25 @@ class RefreshCommandTest extends MigrateCommandTestCase
         $this->artisan('migrate', ['--all-contexts' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--context' => 'User', '--seed' => true])
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_users_3_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_users_3_table(.*)#'))
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_users_2_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_users_2_table(.*)#'))
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_users_1_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_users_1_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Rolling back migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_2_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table/'))
              //
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_2_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_3_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_3_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_2_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table/'))
             //
+             ->expectsOutput(Mockery::pattern('/Seeding database/'))
              ->expectsOutput('Run App\Domain\User\Database\Seeders\User1Seeder')
              ->expectsOutput('Run App\Domain\User\Database\Seeders\User2Seeder')
              ->expectsOutput('Run App\Domain\User\Database\Seeders\User3Seeder')
-             ->expectsOutput('Database seeding completed successfully.')
             //
-             ->doesntExpectOutput('Migrating: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_posts_1_table')
-             ->doesntExpectOutput('Migrating: 2022_01_30_000000_create_xyz_1_table')
-             ->doesntExpectOutput('Run Database\Seeders\DatabaseSeeder')
-             ->doesntExpectOutput('Run App\Domain\Post\Database\Seeders\Post1Seeder')
-             ->doesntExpectOutput('Run App\Domain\Foo\Database\Seeders\Xyz1Seeder')
+             ->doesntExpectOutputToContain('2019_12_14_000001_create_personal_access_tokens_table')
+             ->doesntExpectOutputToContain('Run Database\Seeders\DatabaseSeeder')
+             ->doesntExpectOutputToContain('Run App\Domain\Post\Database\Seeders\Post1Seeder')
+             ->doesntExpectOutputToContain('Run App\Domain\Foo\Database\Seeders\Xyz1Seeder')
              ->assertSuccessful();
     }
 
@@ -121,29 +103,23 @@ class RefreshCommandTest extends MigrateCommandTestCase
         $this->artisan('migrate', ['--only-default' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--only-default' => true, '--seed' => true])
-             ->expectsOutput('Rolling back: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2019_12_14_000001_create_personal_access_tokens_table(.*)#'))
-             ->expectsOutput('Rolling back: 2019_08_19_000000_create_failed_jobs_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2019_08_19_000000_create_failed_jobs_table(.*)#'))
-             ->expectsOutput('Rolling back: 2014_10_12_100000_create_password_resets_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2014_10_12_100000_create_password_resets_table(.*)#'))
-             ->expectsOutput('Rolling back: 2014_10_12_000000_create_users_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2014_10_12_000000_create_users_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Rolling back migrations/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table/'))
             //
-             ->expectsOutput('Migrating: 2014_10_12_000000_create_users_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2014_10_12_000000_create_users_table(.*)#'))
-             ->expectsOutput('Migrating: 2014_10_12_100000_create_password_resets_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2014_10_12_100000_create_password_resets_table(.*)#'))
-             ->expectsOutput('Migrating: 2019_08_19_000000_create_failed_jobs_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2019_08_19_000000_create_failed_jobs_table(.*)#'))
-             ->expectsOutput('Migrating: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2019_12_14_000001_create_personal_access_tokens_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table/'))
             //
+             ->expectsOutput(Mockery::pattern('/Seeding database/'))
              ->expectsOutput('Run Database\Seeders\DatabaseSeeder')
-             ->expectsOutput('Database seeding completed successfully.')
-             ->doesntExpectOutput('Run App\Domain\User\Database\Seeders\User1Seeder')
-             ->doesntExpectOutput('Run App\Domain\Post\Database\Seeders\Post1Seeder')
-             ->doesntExpectOutput('Run App\Domain\Foo\Database\Seeders\Xyz1Seeder')
+             ->doesntExpectOutputToContain('Run App\Domain\User\Database\Seeders\User1Seeder')
+             ->doesntExpectOutputToContain('Run App\Domain\Post\Database\Seeders\Post1Seeder')
+             ->doesntExpectOutputToContain('Run App\Domain\Foo\Database\Seeders\Xyz1Seeder')
              ->assertSuccessful();
     }
 }

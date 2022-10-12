@@ -2,6 +2,7 @@
 
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Commands\Foundation;
 
+use Mockery;
 use PhpToken;
 use Illuminate\Support\Facades\File;
 use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
@@ -12,7 +13,6 @@ use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 class PolicyMakeCommandTest extends MakeCommandTestCase
 {
     private string $commandName = 'make:policy';
-    private string $returnMessage = 'Policy created successfully.';
 
     /**
      * Class name for use in assertions.
@@ -61,7 +61,7 @@ class PolicyMakeCommandTest extends MakeCommandTestCase
                 'name' => $policyClassName
             ])
             ->assertSuccessful()
-            ->expectsOutput($this->returnMessage);
+            ->expectsOutput(Mockery::pattern('/Policy (?:.+) created successfully/'));
 
         $policyFilepath = $this->getComponentFilepath($policyClassName, $this->componentFolder(), $this->contextFolder);
         $hasModelInUseStatement = $this->hasModelInUseStatement($policyFilepath, $modelsComponentNamespace);
@@ -87,7 +87,7 @@ class PolicyMakeCommandTest extends MakeCommandTestCase
                 'name' => $policyClassName
             ])
             ->assertSuccessful()
-            ->expectsOutput($this->returnMessage);
+            ->expectsOutput(Mockery::pattern('/Policy (?:.+) created successfully/'));
 
         $policyFilepath = app_path("Policies/{$policyClassName}.php");
         $hasModelInUseStatement = $this->hasModelInUseStatement($policyFilepath, "App\\Models\\{$this->modelClassName()}");

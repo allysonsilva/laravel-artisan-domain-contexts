@@ -13,7 +13,7 @@ use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 class ModelMakeCommandTest extends MakeCommandTestCase
 {
     private string $commandName = 'make:model';
-    private string $returnMessage = 'Model created successfully.';
+    private string $returnMessage = 'Model (?:.+) created successfully';
 
     /**
      * Class name for use in assertions.
@@ -46,7 +46,7 @@ class ModelMakeCommandTest extends MakeCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => 'User', 'name' => $modelClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         /** @var \ReflectionClass $modelClass */
         [$modelClass, $file] = $this->getContextComponentClass($modelClassName, $componentFolder, 'User');
@@ -67,7 +67,7 @@ class ModelMakeCommandTest extends MakeCommandTestCase
 
         $this->artisan($this->commandName, ['name' => $modelClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         $modelClass = $this->getClass($modelClassName, app_path());
 
@@ -92,7 +92,7 @@ class ModelMakeCommandTest extends MakeCommandTestCase
                         '--context-namespace' => $contextNamespace,
                         'name' => $modelClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         /** @var \ReflectionClass $modelClass */
         [$modelClass, $file] = $this->getContextComponentClass($modelClassName, $componentFolder);
@@ -122,11 +122,11 @@ class ModelMakeCommandTest extends MakeCommandTestCase
                         '--seed' => true,
                         'name' => $modelClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage)
-             ->expectsOutput('Factory created successfully.')
-             ->expectsOutput(Mockery::pattern('#Created Migration: (.*)#'))
-             ->expectsOutput('Seeder created successfully.')
-             ->expectsOutput('Policy created successfully.');
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"))
+             ->expectsOutput(Mockery::pattern('/Factory(?:.+) created successfully/'))
+             ->expectsOutput(Mockery::pattern('/Created migration(.*)/mi'))
+             ->expectsOutput(Mockery::pattern('/Seeder(?:.+) created successfully/'))
+             ->expectsOutput(Mockery::pattern('/Policy(?:.+) created successfully/'));
 
         $modelPath = $this->getContextComponentPath($this->componentFolder(), $context);
         $factoryPath = $this->getContextComponentPath(config('context.folders.components.factories'), $context);

@@ -2,6 +2,7 @@
 
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Commands\Database;
 
+use Mockery;
 use Illuminate\Support\Facades\File;
 use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 
@@ -12,7 +13,7 @@ use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 class FactoryMakeCommandTest extends MakeCommandTestCase
 {
     private string $commandName = 'make:factory';
-    private string $returnMessage = 'Factory created successfully.';
+    private string $returnMessage = 'Factory (?:.+) created successfully';
 
     /**
      * Class name for use in assertions.
@@ -45,7 +46,7 @@ class FactoryMakeCommandTest extends MakeCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => $this->contextFolder, 'name' => $factoryClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         /** @var \ReflectionClass $factoryClass */
         [$factoryClass, $file] = $this->getContextComponentClass($factoryClassName, $componentFolder);
@@ -66,7 +67,7 @@ class FactoryMakeCommandTest extends MakeCommandTestCase
 
         $this->artisan($this->commandName, ['name' => $factoryClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         $factoryClass = $this->getClass($factoryClassName, database_path('factories'));
 
@@ -91,7 +92,7 @@ class FactoryMakeCommandTest extends MakeCommandTestCase
                         '--context-namespace' => $contextNamespace,
                         'name' => $factoryClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         /** @var \ReflectionClass $factoryClass */
         [$factoryClass, $file] = $this->getContextComponentClass($factoryClassName, $componentFolder);

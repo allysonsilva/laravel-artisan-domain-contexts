@@ -2,6 +2,7 @@
 
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Tools;
 
+use Mockery;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -100,7 +101,7 @@ class ClassIteratorTest extends TestCase
 
             $this->artisan('make:job', ['--context' => $this->context, 'name' => "Baz{$this->randomString()}Job",])
                 ->assertSuccessful()
-                ->expectsOutput('Job created successfully.');
+                ->expectsOutput(Mockery::pattern('/Job (?:.+) created successfully/'));
         }
 
         $jobContextPath = $this->getContextComponentPath(config('context.folders.components.jobs'), $this->context);
@@ -136,7 +137,7 @@ class ClassIteratorTest extends TestCase
                 'name' => $jobName,
             ])
             ->assertSuccessful()
-            ->expectsOutput('Job created successfully.');
+            ->expectsOutput(Mockery::pattern('/Job (?:.+) created successfully/'));
 
         /** @var string */
         $componentFolder = config('context.folders.components.jobs');

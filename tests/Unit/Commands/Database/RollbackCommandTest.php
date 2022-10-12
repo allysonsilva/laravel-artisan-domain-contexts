@@ -46,17 +46,13 @@ class RollbackCommandTest extends MigrateCommandTestCase
         $this->artisan('migrate', ['--all-contexts' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--only-default' => true, '--step' => 99])
-             ->expectsOutput('Rolling back: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2019_12_14_000001_create_personal_access_tokens_table(.*)#'))
-             ->expectsOutput('Rolling back: 2019_08_19_000000_create_failed_jobs_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2019_08_19_000000_create_failed_jobs_table(.*)#'))
-             ->expectsOutput('Rolling back: 2014_10_12_100000_create_password_resets_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2014_10_12_100000_create_password_resets_table(.*)#'))
-             ->expectsOutput('Rolling back: 2014_10_12_000000_create_users_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2014_10_12_000000_create_users_table(.*)#'))
-             ->doesntExpectOutput('Rolling back: 2022_01_30_000000_create_posts_1_table')
-             ->doesntExpectOutput('Rolling back: 2022_01_30_000000_create_users_1_table')
-             ->doesntExpectOutput('Rolling back: 2022_01_30_000000_create_xyz_1_table')
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_1_table(?:.+) Migration not found/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table(?:.+) Migration not found/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table(?:.+) Migration not found/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table/'))
              ->assertSuccessful();
 
         self::assertFalse(DB::getSchemaBuilder()->hasTable('users'));
@@ -106,12 +102,11 @@ class RollbackCommandTest extends MigrateCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => 'Post', '--step' => 99])
              ->expectsQuestion('Which class/file would you like to run?', $migrations)
-             ->expectsOutput('Rolling back: 2022_01_30_000000_create_posts_2_table')
-             ->expectsOutput(Mockery::pattern('#Rolled back:  2022_01_30_000000_create_posts_2_table(.*)#'))
-             ->doesntExpectOutput('Rolling back: 2022_01_30_000000_create_posts_1_table')
-             ->doesntExpectOutput('Rolling back: 2022_01_30_000000_create_posts_3_table')
-             ->doesntExpectOutput('Rolling back: 2022_01_30_000000_create_users_3_table')
-             ->doesntExpectOutput('Rolling back: 2014_10_12_000000_create_users_table')
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table(?:.+) Migration not found/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table(?:.+) Migration not found/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table(?:.+) Migration not found/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table(?:.+) Migration not found/'))
              ->assertSuccessful();
 
         self::assertFalse(DB::getSchemaBuilder()->hasTable('posts_2'));
