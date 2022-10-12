@@ -55,12 +55,12 @@
         }
     },
     "config": {
-        "optimize-autoloader": true,
-        "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ergebnis/composer-normalize": true
-        }
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
     },
     "extra": {
         "laravel": {
