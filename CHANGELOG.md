@@ -2,7 +2,13 @@
 
 All notable changes to `laravel-artisan-domain-contexts` will be documented in this file.
 
-## [Unreleased](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.1.0...2.x)
+## [Unreleased](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.2.0...2.x)
+
+## [v2.2.0 (2022-10-12)](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.1.0...v2.2.0)
+
+### Changed
+
+- Refactored unit tests to pass according to Laravel `v9.32` minimum version
 
 ## [v2.1.0 (2022-05-05)](https://github.com/allysonsilva/laravel-artisan-domain-contexts/compare/v2.0.1...v2.1.0)
 
