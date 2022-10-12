@@ -3,6 +3,7 @@
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Commands\Foundation;
 
 use Closure;
+use Mockery;
 use Illuminate\Support\Facades\File;
 use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 
@@ -17,7 +18,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:cast command'  => [
                 'command' => [
                     'name' => 'make:cast',
-                    'return' => 'Cast created successfully.',
+                    'return' => Mockery::pattern('/Cast (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Cast",
                 'componentFolder' => fn () => config('context.folders.components.casts'),
@@ -30,7 +31,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:channel command'  => [
                 'command' => [
                     'name' => 'make:channel',
-                    'return' => 'Channel created successfully.',
+                    'return' => Mockery::pattern('/Channel (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Channel",
                 'componentFolder' => fn () => config('context.folders.components.channel'),
@@ -43,7 +44,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:command command'  => [
                 'command' => [
                     'name' => 'make:command',
-                    'return' => 'Console command created successfully.',
+                    'return' => Mockery::pattern('/Console command (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Command",
                 'componentFolder' => fn () => config('context.folders.components.console'),
@@ -56,7 +57,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:event command'  => [
                 'command' => [
                     'name' => 'make:event',
-                    'return' => 'Event created successfully.',
+                    'return' => Mockery::pattern('/Event (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Event",
                 'componentFolder' => fn () => config('context.folders.components.events'),
@@ -69,7 +70,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:exception command'  => [
                 'command' => [
                     'name' => 'make:exception',
-                    'return' => 'Exception created successfully.',
+                    'return' => Mockery::pattern('/Exception (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Exception",
                 'componentFolder' => fn () => config('context.folders.components.exceptions'),
@@ -82,7 +83,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:job command'  => [
                 'command' => [
                     'name' => 'make:job',
-                    'return' => 'Job created successfully.',
+                    'return' => Mockery::pattern('/Job (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Job",
                 'componentFolder' => fn () => config('context.folders.components.jobs'),
@@ -95,7 +96,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:listener command'  => [
                 'command' => [
                     'name' => 'make:listener',
-                    'return' => 'Listener created successfully.',
+                    'return' => Mockery::pattern('/Listener (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Listener",
                 'componentFolder' => fn () => config('context.folders.components.listeners'),
@@ -108,7 +109,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:mail command'  => [
                 'command' => [
                     'name' => 'make:mail',
-                    'return' => 'Mail created successfully.',
+                    'return' => Mockery::pattern('/Mail (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Mail",
                 'componentFolder' => fn () => config('context.folders.components.mail'),
@@ -121,7 +122,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:notification command'  => [
                 'command' => [
                     'name' => 'make:notification',
-                    'return' => 'Notification created successfully.',
+                    'return' => Mockery::pattern('/Notification (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Notification",
                 'componentFolder' => fn () => config('context.folders.components.notifications'),
@@ -134,7 +135,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:observer command'  => [
                 'command' => [
                     'name' => 'make:observer',
-                    'return' => 'Observer created successfully.',
+                    'return' => Mockery::pattern('/Observer (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Observer",
                 'componentFolder' => fn () => config('context.folders.components.observers'),
@@ -147,7 +148,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:policy command'  => [
                 'command' => [
                     'name' => 'make:policy',
-                    'return' => 'Policy created successfully.',
+                    'return' => Mockery::pattern('/Policy (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Policy",
                 'componentFolder' => fn () => config('context.folders.components.policies'),
@@ -160,7 +161,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:provider command'  => [
                 'command' => [
                     'name' => 'make:provider',
-                    'return' => 'Provider created successfully.',
+                    'return' => Mockery::pattern('/Provider (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Provider",
                 'componentFolder' => fn () => config('context.folders.components.providers'),
@@ -173,7 +174,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:request command'  => [
                 'command' => [
                     'name' => 'make:request',
-                    'return' => 'Request created successfully.',
+                    'return' => Mockery::pattern('/Request (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Request",
                 'componentFolder' => fn () => config('context.folders.components.requests'),
@@ -186,7 +187,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:resource command'  => [
                 'command' => [
                     'name' => 'make:resource',
-                    'return' => 'Resource created successfully.',
+                    'return' => Mockery::pattern('/Resource (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Resource",
                 'componentFolder' => fn () => config('context.folders.components.resources'),
@@ -199,7 +200,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:rule command'  => [
                 'command' => [
                     'name' => 'make:rule',
-                    'return' => 'Rule created successfully.',
+                    'return' => Mockery::pattern('/Rule (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Rule",
                 'componentFolder' => fn () => config('context.folders.components.rules'),
@@ -212,7 +213,7 @@ class MakeCommandTest extends MakeCommandTestCase
             'Testing make:middleware command'  => [
                 'command' => [
                     'name' => 'make:middleware',
-                    'return' => 'Middleware created successfully.',
+                    'return' => Mockery::pattern('/Middleware (?:.+) created successfully/'),
                 ],
                 'dummyClass' => "Foo{$this->randomString()}Middleware",
                 'componentFolder' => fn () => config('context.folders.components.middlewares'),

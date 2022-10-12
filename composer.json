@@ -24,7 +24,7 @@
     "homepage": "https://github.com/allysonsilva/laravel-artisan-domain-contexts",
     "require": {
         "php": ">=8.0",
-        "laravel/framework": "^9.0",
+        "laravel/framework": "^9.32",
         "nikic/php-parser": "^4.13"
     },
     "require-dev": {
@@ -55,6 +55,10 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        },
         "optimize-autoloader": true,
         "sort-packages": true
     },
@@ -75,6 +79,6 @@
         "test:analyse": "php -d memory_limit=1G vendor/bin/phpstan analyse --error-format=table --ansi --memory-limit=1G",
         "test:mess": "phpmd src ansi phpmd.xml.dist --suffixes php",
         "test:standard": "phpcs --report=full --report-width=auto",
-        "test:unit": "phpunit --group Migration,Seeder,Making,Input,Options,Tools --colors=always"
+        "test:unit": "php -d memory_limit=1G ./vendor/bin/phpunit --group Migration,Seeder,Making,Input,Options,Tools --colors=always"
     }
 }

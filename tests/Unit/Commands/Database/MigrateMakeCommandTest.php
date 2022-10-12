@@ -56,12 +56,12 @@ class MigrateMakeCommandTest extends MakeCommandTestCase
         $exitCode = $this->artisan($this->commandName, ['--context' => $this->contextFolder, 'name' => $migrationFilename = $this->migrationFilename()]);
         $consoleOutput = $this->app[Kernel::class]->output();
 
-        [, $filename] = explode(': ', trim($consoleOutput));
+        $filename = Str::between($consoleOutput, '[', ']');
 
         $componentFilepath = $this->getComponentFilepath($filename, $this->componentFolder());
 
         $this->assertTrue($exitCode === 0);
-        $this->assertTrue(str_starts_with($consoleOutput, 'Created Migration: '));
+        $this->assertTrue(str_contains($consoleOutput, 'Created migration'));
         $this->assertTrue(File::exists($componentFilepath));
 
         File::delete($componentFilepath);
@@ -76,12 +76,12 @@ class MigrateMakeCommandTest extends MakeCommandTestCase
         $exitCode = $this->artisan($this->commandName, ['name' => $migrationFilename = $this->migrationFilename()]);
         $consoleOutput = $this->app[Kernel::class]->output();
 
-        [, $filename] = explode(': ', trim($consoleOutput));
+        $filename = Str::between($consoleOutput, '[', ']');
 
         $componentFilepath = database_path('migrations' . '/' . $filename . '.php');
 
         $this->assertTrue($exitCode === 0);
-        $this->assertTrue(str_starts_with($consoleOutput, 'Created Migration: '));
+        $this->assertTrue(str_contains($consoleOutput, 'Created migration'));
         $this->assertTrue(File::exists($componentFilepath));
 
         File::delete($componentFilepath);

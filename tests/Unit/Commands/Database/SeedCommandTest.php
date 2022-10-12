@@ -2,6 +2,7 @@
 
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Commands\Database;
 
+use Mockery;
 use Allyson\ArtisanDomainContext\Exceptions\ClassNotFoundException;
 use Allyson\ArtisanDomainContext\Tests\Unit\MigrateCommandTestCase;
 
@@ -12,7 +13,6 @@ use Allyson\ArtisanDomainContext\Tests\Unit\MigrateCommandTestCase;
 class SeedCommandTest extends MigrateCommandTestCase
 {
     private string $commandName = 'db:seed';
-    private string $returnMessage = 'Database seeding completed successfully.';
 
     /**
      * @test
@@ -22,8 +22,8 @@ class SeedCommandTest extends MigrateCommandTestCase
     {
         $this->artisan($this->commandName, ['--only-default' => true])
              ->assertSuccessful()
+             ->expectsOutput(Mockery::pattern('/Seeding database/'))
              ->expectsOutput('Run Database\Seeders\DatabaseSeeder')
-             ->expectsOutput($this->returnMessage)
              ->doesntExpectOutput('Run App\Domain\User\Database\Seeders\Users1TableSeeder')
              ->doesntExpectOutput('Run App\Domain\Post\Database\Seeders\Post1TableSeeder')
              ->doesntExpectOutput('Run App\Domain\Foo\Database\Seeders\Xyz1TableSeeder');

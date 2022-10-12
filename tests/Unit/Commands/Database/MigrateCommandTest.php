@@ -22,14 +22,11 @@ class MigrateCommandTest extends MigrateCommandTestCase
     {
         $this->artisan($this->commandName, ['--only-default' => true])
              ->assertSuccessful()
-             ->expectsOutput('Migrating: 2014_10_12_000000_create_users_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2014_10_12_000000_create_users_table(.*)#'))
-             ->expectsOutput('Migrating: 2014_10_12_100000_create_password_resets_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2014_10_12_100000_create_password_resets_table(.*)#'))
-             ->expectsOutput('Migrating: 2019_08_19_000000_create_failed_jobs_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2019_08_19_000000_create_failed_jobs_table(.*)#'))
-             ->expectsOutput('Migrating: 2019_12_14_000001_create_personal_access_tokens_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2019_12_14_000001_create_personal_access_tokens_table(.*)#'));
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table/mi'));
 
         self::assertTrue(DB::getSchemaBuilder()->hasTable('users'));
         self::assertTrue(DB::getSchemaBuilder()->hasTable('password_resets'));
@@ -53,10 +50,9 @@ class MigrateCommandTest extends MigrateCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => 'User'])
              ->expectsQuestion('Which class/file would you like to run?', $migrations)
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_3_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_3_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table/mi'))
              ->assertSuccessful();
 
         self::assertTrue(DB::getSchemaBuilder()->hasTable('users_1'));
@@ -73,10 +69,9 @@ class MigrateCommandTest extends MigrateCommandTestCase
     public function runningMigrationsUsingPathOption(): void
     {
         $this->artisan($this->commandName, ['--path' => 'app/'. $this->domainFolder .'/Foo/Database/Migrations/', '--force' => true])
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_xyz_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_xyz_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_xyz_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_xyz_2_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_1_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_2_table/mi'))
              ->assertSuccessful();
 
         self::assertTrue(DB::getSchemaBuilder()->hasTable('xyz_1'));
@@ -93,12 +88,10 @@ class MigrateCommandTest extends MigrateCommandTestCase
     public function runningContextMigrationsWithForceOption(): void
     {
         $this->artisan($this->commandName, ['--context' => 'Post', '--force' => true])
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_2_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_3_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_3_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table/mi'))
              ->assertSuccessful();
 
         self::assertTrue(DB::getSchemaBuilder()->hasTable('posts_1'));
@@ -116,22 +109,15 @@ class MigrateCommandTest extends MigrateCommandTestCase
     public function runningMigrationsFromAllContexts(): void
     {
         $this->artisan($this->commandName, ['--all-contexts' => true])
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_2_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_posts_3_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_posts_3_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_2_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_users_3_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_users_3_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_xyz_1_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_xyz_1_table(.*)#'))
-             ->expectsOutput('Migrating: 2022_01_30_000000_create_xyz_2_table')
-             ->expectsOutput(Mockery::pattern('#Migrated:  2022_01_30_000000_create_xyz_2_table(.*)#'))
+             ->expectsOutput(Mockery::pattern('/Running migrations/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_2_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_1_table/mi'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_2_table/mi'))
              ->assertSuccessful();
 
         self::assertTrue(DB::getSchemaBuilder()->hasTable('posts_1'));

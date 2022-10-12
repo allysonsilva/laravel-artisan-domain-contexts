@@ -2,6 +2,7 @@
 
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Commands\Database;
 
+use Mockery;
 use Allyson\ArtisanDomainContext\Tests\Unit\MigrateCommandTestCase;
 
 /**
@@ -21,16 +22,14 @@ class StatusCommandTest extends MigrateCommandTestCase
         $this->artisan('migrate', ['--all-contexts' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--all-contexts' => true])
-             ->expectsTable(['Ran?', 'Migration', 'Batch'], [
-                ['Yes', '2022_01_30_000000_create_posts_1_table', 1],
-                ['Yes', '2022_01_30_000000_create_posts_2_table', 1],
-                ['Yes', '2022_01_30_000000_create_posts_3_table', 1],
-                ['Yes', '2022_01_30_000000_create_users_1_table', 1],
-                ['Yes', '2022_01_30_000000_create_users_2_table', 1],
-                ['Yes', '2022_01_30_000000_create_users_3_table', 1],
-                ['Yes', '2022_01_30_000000_create_xyz_1_table', 1],
-                ['Yes', '2022_01_30_000000_create_xyz_2_table', 1],
-             ])
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_2_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_1_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_2_table (?:.+) \[1\] Ran/'))
              ->assertSuccessful();
     }
 
@@ -46,20 +45,16 @@ class StatusCommandTest extends MigrateCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => 'User'])
              ->expectsQuestion('Which class/file would you like to run?', ['ALL'])
-             ->expectsTable(['Ran?', 'Migration', 'Batch'], [
-                ['Yes', '2022_01_30_000000_create_users_1_table', 1],
-                ['Yes', '2022_01_30_000000_create_users_2_table', 1],
-                ['Yes', '2022_01_30_000000_create_users_3_table', 1],
-             ])
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_1_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_2_table (?:.+) \[1\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_users_3_table (?:.+) \[1\] Ran/'))
              ->assertSuccessful();
 
         $this->artisan($this->commandName, ['--context' => 'Post'])
              ->expectsQuestion('Which class/file would you like to run?', ['ALL'])
-             ->expectsTable(['Ran?', 'Migration', 'Batch'], [
-                ['No', '2022_01_30_000000_create_posts_1_table',],
-                ['No', '2022_01_30_000000_create_posts_2_table',],
-                ['No', '2022_01_30_000000_create_posts_3_table',],
-             ])
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_1_table (?:.+) Pending/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_2_table (?:.+) Pending/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_posts_3_table (?:.+) Pending/'))
              ->assertSuccessful();
 
         $fooMigrations = [
@@ -69,10 +64,8 @@ class StatusCommandTest extends MigrateCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => 'Foo'])
              ->expectsQuestion('Which class/file would you like to run?', $fooMigrations)
-             ->expectsTable(['Ran?', 'Migration', 'Batch'], [
-                ['No', '2022_01_30_000000_create_xyz_1_table',],
-                ['No', '2022_01_30_000000_create_xyz_2_table',],
-             ])
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_1_table (?:.+) Pending/'))
+             ->expectsOutput(Mockery::pattern('/2022_01_30_000000_create_xyz_2_table (?:.+) Pending/'))
              ->assertSuccessful();
     }
 
@@ -85,23 +78,19 @@ class StatusCommandTest extends MigrateCommandTestCase
         $this->artisan('migrate', ['--all-contexts' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--only-default' => true])
-             ->expectsTable(['Ran?', 'Migration', 'Batch'], [
-                ['No', '2014_10_12_000000_create_users_table',],
-                ['No', '2014_10_12_100000_create_password_resets_table',],
-                ['No', '2019_08_19_000000_create_failed_jobs_table',],
-                ['No', '2019_12_14_000001_create_personal_access_tokens_table',],
-             ])
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table (?:.+) Pending/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table (?:.+) Pending/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table (?:.+) Pending/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table (?:.+) Pending/'))
              ->assertSuccessful();
 
         $this->artisan('migrate', ['--only-default' => true])->assertSuccessful();
 
         $this->artisan($this->commandName, ['--only-default' => true])
-             ->expectsTable(['Ran?', 'Migration', 'Batch'], [
-                ['Yes', '2014_10_12_000000_create_users_table', 2],
-                ['Yes', '2014_10_12_100000_create_password_resets_table', 2],
-                ['Yes', '2019_08_19_000000_create_failed_jobs_table', 2],
-                ['Yes', '2019_12_14_000001_create_personal_access_tokens_table', 2],
-             ])
+             ->expectsOutput(Mockery::pattern('/2014_10_12_000000_create_users_table (?:.+) \[2\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2014_10_12_100000_create_password_resets_table (?:.+) \[2\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2019_08_19_000000_create_failed_jobs_table (?:.+) \[2\] Ran/'))
+             ->expectsOutput(Mockery::pattern('/2019_12_14_000001_create_personal_access_tokens_table (?:.+) \[2\] Ran/'))
              ->assertSuccessful();
     }
 }

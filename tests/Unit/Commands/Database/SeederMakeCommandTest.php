@@ -2,6 +2,7 @@
 
 namespace Allyson\ArtisanDomainContext\Tests\Unit\Commands\Database;
 
+use Mockery;
 use Illuminate\Support\Facades\File;
 use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 
@@ -12,7 +13,7 @@ use Allyson\ArtisanDomainContext\Tests\Unit\MakeCommandTestCase;
 class SeederMakeCommandTest extends MakeCommandTestCase
 {
     private string $commandName = 'make:seeder';
-    private string $returnMessage = 'Seeder created successfully.';
+    private string $returnMessage = 'Seeder (?:.+) created successfully';
 
     /**
      * Class name for use in assertions.
@@ -45,7 +46,7 @@ class SeederMakeCommandTest extends MakeCommandTestCase
 
         $this->artisan($this->commandName, ['--context' => $this->contextFolder, 'name' => $seederClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         /** @var \ReflectionClass $seederClass */
         [$seederClass, $file] = $this->getContextComponentClass($seederClassName, $componentFolder);
@@ -66,7 +67,7 @@ class SeederMakeCommandTest extends MakeCommandTestCase
 
         $this->artisan($this->commandName, ['name' => $seederClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         $seederClass = $this->getClass($seederClassName, database_path('seeders'));
 
@@ -91,7 +92,7 @@ class SeederMakeCommandTest extends MakeCommandTestCase
                         '--context-namespace' => $contextNamespace,
                         'name' => $seederClassName])
              ->assertSuccessful()
-             ->expectsOutput($this->returnMessage);
+             ->expectsOutput(Mockery::pattern("/{$this->returnMessage}/"));
 
         /** @var \ReflectionClass $seederClass */
         [$seederClass, $file] = $this->getContextComponentClass($seederClassName, $componentFolder);
